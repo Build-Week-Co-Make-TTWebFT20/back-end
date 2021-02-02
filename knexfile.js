@@ -1,59 +1,30 @@
 // Update with your config settings.
 require('dotenv').config();
+const pg = require('pg');
 
-const pgConnection = process.env.DATABASE_URL || "postgresql://postgres@localhost/auth";
+const localConnection = process.env.LOCAL_PG_ROUTE
+// const pgConnection = process.env.DATABASE_URL || "postgresql://postgres@localhost/auth";
+
+let connection;
+if (process.env.DATABASE_URL){
+  pg.defaults.ssl = { rejectUnauthorized: false};
+  connection = process.env.DATABASE_URL;
+} else {
+  connection = localConnection
+}
+
+const sharedConfig = {
+  client: 'pg',
+  connection,
+  migrations: { direction: './database/migrations' },
+  seeds: { directory: './database/seeds' }
+};
 
 module.exports = {
 
-  development: {
-    client: "sqlite3",
-    useNullAsDefault: true,
-    connection: {
-      filename: "./database/auth.db3",
-    },
-    pool: {
-      afterCreate: (conn, done) => {
-        conn.run("PRAGMA foreign_keys = ON", done);
-      },
-    },
-    migrations: {
-      directory: "./database/migrations",
-    },
-    seeds: {
-      directory: "./database/seeds",
-    },
-  },
-
-  staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
-  },
-
+  development: { ...sharedConfig },
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
-    pool: {
-      min: 2,
-      max: 10
-    },
-    migrations: {
-      tableName: 'knex_migrations'
-    }
-  }
-
+    ...sharedConfig,
+    pool: {min: 2, max: 10},
+  },
 };
