@@ -29,3 +29,5 @@
 | PUT    | /api/posts/:id          | Allows a user to edit one of their posts, but only if they created it                    |
 | DELETE | /api/posts/:id          | Allows a user to delete one of their posts, but only if they created it                  |
 | GET    | /api/posts/:id/comments | Fetches all of the comments for a given post (STRETCH GOAL)                              |
+
+#### END
