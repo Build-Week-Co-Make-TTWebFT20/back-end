@@ -19,7 +19,7 @@ router.post('/register', (req, res) => {
             })
             .catch(err => {
                 console.log(err.message)
-                res.status(500).json({ errorMessage: "Internal server error"})
+                res.status(500).json(err.message)
             })
     } else {
         res.status(400).json({
@@ -43,7 +43,7 @@ router.post('/login', (req, res) => {
             })
             .catch(err => {
                 console.log(err.message);
-                res.status(500).json({ message: "Internal server error"})
+                res.status(500).json(err.message)
             })
     } else {
         res.status(400).json({
