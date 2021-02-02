@@ -35,10 +35,17 @@ router.get('/:id', (req, res) => {
         .catch(err => {
             res.status(500).json(err.message)
         })
-})
+});
 
-router.post('/', checkForm, (req, res) => {
-
-})
+router.post('/', (req, res) => {
+    const newPost = req.body;
+    Post.add(newPost)
+        .then(post => {
+            res.status(201).json(post)
+        })
+        .catch(err => {
+            res.status(500).json(err.message)
+        })
+});
 
 module.exports = router;
