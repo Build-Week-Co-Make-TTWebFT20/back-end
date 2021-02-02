@@ -21,10 +21,22 @@ function getAllById(id){
     return db('posts').where('creator_id', id);
 }
 
+function update(id, changes){
+    return db('posts')
+        .where({ id })
+        .update(changes);
+}
+
+function removePost(id){
+    return db('posts').where('id', id).del();
+}
+
 module.exports = {
     add,
     findById,
     findBy,
     getAll,
-    getAllById
+    getAllById,
+    update,
+    removePost
 };

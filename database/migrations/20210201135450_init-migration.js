@@ -20,20 +20,21 @@ exports.up = function(knex) {
         })
         .createTable("posts", tbl => {
             tbl.increments();
-            tbl.string("name", 128).notNullable();
+            tbl.string("post_name", 128).notNullable();
             tbl.string("description", 1200).notNullable();
             tbl.string("city", 20).notNullable();
-            tbl.string("state", 2).notNullable();
+            tbl.string("abr_state", 2).notNullable();
             tbl.integer("zip", 5).notNullable();
             tbl.integer("creator_id")
                 .notNullable()
                 .unsigned()
-                .references('users.id')
+                .references('id')
+                .inTable('users')
                 .onDelete('RESTRICT')
                 .onUpdate('CASCADE')
         })
         .createTable('votes', tbl => {
-            tbl.increments();
+            tbl.increments()
             tbl.integer('post_id')
                 .notNullable()
                 .unsigned()
@@ -48,9 +49,26 @@ exports.up = function(knex) {
                 .onUpdate('CASCADE')
             tbl.integer('direction').notNullable().defaultTo(0)
         })
+        .createTable('user_posts', tbl => {
+            tbl.increments()
+            tbl.integer('post_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('posts')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE');
+            tbl.integer('user_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('users')
+                .onDelete('CASCADE')
+                .onUpdate('CASCADE')
+        });
   
 };
 
 exports.down = function(knex) {
-  return knex.schema.dropTableIfExists("votes").dropTableIfExists("posts").dropTableIfExists("users").dropTableIfExists("roles");
+  return knex.schema.dropTableIfExists('user_posts').dropTableIfExists("votes").dropTableIfExists("posts").dropTableIfExists("users").dropTableIfExists("roles");
 };
