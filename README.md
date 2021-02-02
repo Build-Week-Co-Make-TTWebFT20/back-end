@@ -10,7 +10,6 @@
 | Base URL                                   |
 | ------------------------------------------ |
 | https://comake-tt-webft-20.herokuapp.com/  |
-| ------------------------------------------ |
 
 #### Auth
 
@@ -18,7 +17,6 @@
 | ------ | ------------------ | --------------------------------------------------------------------------------- |
 | POST   | /api/auth/register | Creates a new user account. `Username` and `Password` are required, both strings. |
 | POST   | /api/auth/login    | Logs a user in. `Username` and `Password` are required, both strings.             |
-| -------|--------------------|---------------------------------------------------------------------------------- |
 
 
 #### Posts
@@ -31,4 +29,3 @@
 | PUT    | /api/posts/:id          | Allows a user to edit one of their posts, but only if they created it                    |
 | DELETE | /api/posts/:id          | Allows a user to delete one of their posts, but only if they created it                  |
 | GET    | /api/posts/:id/comments | Fetches all of the comments for a given post (STRETCH GOAL)                              |
-| -------|-------------------------|----------------------------------------------------------------------------------------- |
