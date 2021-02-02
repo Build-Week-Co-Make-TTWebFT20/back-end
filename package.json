@@ -8,7 +8,8 @@
     "server": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrateh": "heroku run knex migrate:latest -a comake-tt-webft-20",
-    "rollbackh": "heroku run knex migrate:rollback -a comake-tt-webft-20"
+    "rollbackh": "heroku run knex migrate:rollback -a comake-tt-webft-20",
+    "seedh": "heroku run knex seed:run -a comake-tt-webft-20"
   },
   "repository": {
     "type": "git",
