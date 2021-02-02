@@ -25,6 +25,7 @@
 | Method | Endpoint                | Description                                                                              |
 | ------ | ------------------------| ---------------------------------------------------------------------------------------- |
 | GET    | /api/posts              | Gets all current user posts/issues, regardless of proximity                              |
+| GET    | /api/posts/:id          | Gets a specific post by it's unique ID                                                   |
 | GET    | /api/posts/user/:id     | Gets all current user posts/issues by creator_id                                         |
 | POST   | /api/posts              | Creates a new user psot. `Name`, `Description`, `City`, `State`, and `Zip` are required. |
 | PUT    | /api/posts/:id          | Allows a user to edit one of their posts, but only if they created it                    |
