@@ -20,7 +20,8 @@
 
 
 #### Posts
-- Not yet implemented
+- Each endpoint requires a valid token to access
+- PUT and DELETE functions are only authorized if the person sending the request is the creator of the post (send object with creator_id)
 
 | Method | Endpoint                | Description                                                                              |
 | ------ | ------------------------| ---------------------------------------------------------------------------------------- |
