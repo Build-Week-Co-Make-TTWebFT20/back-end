@@ -42,7 +42,8 @@ router.get('/:id', validateToken, (req, res) => {
 });
 
 router.post('/', validateToken, (req, res) => {
-    const newPost = req.body;
+    const currentUser = req.decodedJwt.username;
+    const newPost = {...req.body, "creator_id": currentUser};
     Post.add(newPost)
         .then(post => {
             res.status(201).json(post)
