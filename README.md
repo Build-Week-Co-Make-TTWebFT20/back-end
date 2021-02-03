@@ -31,6 +31,17 @@
 | POST   | /api/posts              | Creates a new user psot. `Name`, `Description`, `City`, `State`, and `Zip` are required. |
 | PUT    | /api/posts/:id          | Allows a user to edit one of their posts, but only if they created it                    |
 | DELETE | /api/posts/:id          | Allows a user to delete one of their posts, but only if they created it                  |
-| GET    | /api/posts/:id/comments | Fetches all of the comments for a given post (STRETCH GOAL)                              |
+
+#### Comments
+- Stretch goal. Each are currently implemented, unsure if they work or not
+- I've left these two endpoints combined as generally comments are associated with posts.
+
+| Method | Endpoint                | Description                                                                              |
+| ------ | ------------------------| ---------------------------------------------------------------------------------------- |
+| GET    | /api/posts/:id/comments | Gets all comments for a given post ID                                                    |
+| GET    | /api/posts/comments/:id | Gets a specific comment by the comment's ID                                              |
+| POST   | /api/posts/:id/comments | Creates a new user comment. Must submit an object containing `text_data`                 |
+| PUT    | /api/posts/comments/:id | Updates a given comment by its ID, still accepts only a body of `text_data`              |
+| DELETE | /api/posts/comments/:id | Deletes a given comment by its ID only if the user signed in created it.                 |
 
 #### END

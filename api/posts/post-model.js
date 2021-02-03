@@ -6,7 +6,13 @@ async function add(post){
 }
 
 function findById(id){
-    return db('posts').where('id', id).first();
+    return db('posts as p')
+        .leftJoin('votes as v', 'v.post_id', 'p.id')
+        .sum('v.direction')
+        .select('p.id', 'p.post_name','p.description','p.city','p.abr_state','p.zip')
+        .groupBy('p.id')
+        .where('p.id', id)
+        .first();
 }
 
 function findBy(filter){
@@ -14,11 +20,21 @@ function findBy(filter){
 }
 
 function getAll(){
-    return db('posts')
+    return db('posts as p')
+        .leftJoin('votes as v', 'v.post_id', 'p.id')
+        .join('users as u', 'p.creator_id', 'u.id')
+        .sum('v.direction as score')
+        .groupBy('p.id', 'u.id')
+        .select('p.id', 'p.post_name','p.description','p.city','p.abr_state','p.zip', 'u.username as author')
 }
 
 function getAllById(id){
-    return db('posts').where('creator_id', id);
+    return db('posts as p')
+        .leftJoin('votes as v', 'v.post_id', 'p.id')
+        .sum('v.direction')
+        .select('p.id', 'p.post_name','p.description','p.city','p.abr_state','p.zip')
+        .groupBy('p.id')
+        .where('p.creator_id', id);
 }
 
 function update(id, changes){
