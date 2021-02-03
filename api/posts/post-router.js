@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Post = require('./post-model');
 const Comment = require('./comment-model');
+const User = require('../users/user-model');
 const checkForm = require('./post-middleware');
 const validateToken = require('../auth/restricted-middleware');
 const validateOwnership = require('../middleware/validateOwnership');
@@ -41,9 +42,12 @@ router.get('/:id', validateToken, (req, res) => {
         })
 });
 
-router.post('/', validateToken, (req, res) => {
+router.post('/', validateToken, async (req, res) => {
     const currentUser = req.decodedJwt.username;
-    const newPost = {...req.body, "creator_id": currentUser};
+    const userId = await User.findBy({username: currentUser}); // grab the user object based on their username
+    const newPost = {...req.body, "creator_id": userId.id}; // submit new post with creator_id as username's id, cont..
+    // It's a bit stringy to change now, but best case scenario would have been to store the username with the post 
+    // as the author rather than 'creator_id'. Because I didn't do that, now I have to hack this together...
     Post.add(newPost)
         .then(post => {
             res.status(201).json(post)

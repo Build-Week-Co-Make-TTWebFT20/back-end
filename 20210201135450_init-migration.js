@@ -25,7 +25,7 @@ exports.up = function(knex) {
             tbl.string("city", 20).notNullable();
             tbl.string("abr_state", 2).notNullable();
             tbl.integer("zip", 5).notNullable();
-            tbl.string("author")
+            tbl.integer("creator_id")
                 .unsigned()
                 .references('id')
                 .inTable('users')
