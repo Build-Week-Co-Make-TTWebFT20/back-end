@@ -10,8 +10,10 @@ const validatePayload = require('../middleware/validatePayload');
 
 
 // Grab all posts
-router.get('/', validateToken, (req, res) => {
-    Post.getAll()
+router.get('/', validateToken, async (req, res) => {
+    const currentUser = req.decodedJwt.username;
+    const userId = await User.findBy({username: currentUser});
+    Post.getAll(userId)
         .then(posts => {
             res.status(200).json(posts)
         })
@@ -21,9 +23,11 @@ router.get('/', validateToken, (req, res) => {
 });
 
 //Grab all posts by creator_id
-router.get('/user/:id', validateToken, (req, res) => {
+router.get('/user/:id', validateToken, async (req, res) => {
+    const currentUser = req.decodedJwt.username;
+    const userId = await User.findBy({username: currentUser}); // grab the user object based on their username
     const id = req.params.id;
-    Post.getAllById(id)
+    Post.getAllById(id, userId)
         .then(posts => {
             res.status(200).json(posts)
         })
@@ -32,9 +36,11 @@ router.get('/user/:id', validateToken, (req, res) => {
         })
 });
 
-router.get('/:id', validateToken, (req, res) => {
+router.get('/:id', validateToken, async (req, res) => {
+    const currentUser = req.decodedJwt.username;
+    const userId = await User.findBy({username: currentUser}); // grab the user object based on their username
     const id = req.params.id;
-    Post.findById(id)
+    Post.findById(id, userId)
         .then(post => {
             res.status(200).json(post)
         })
