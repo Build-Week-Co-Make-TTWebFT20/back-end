@@ -6,6 +6,7 @@ const checkForm = require('./post-middleware');
 const validateToken = require('../auth/restricted-middleware');
 const validateOwnership = require('../middleware/validateOwnership');
 const validateCommentOwnership = require('../middleware/validateOwnershipComment');
+const validatePayload = require('../middleware/validatePayload');
 
 
 // Grab all posts
@@ -93,7 +94,7 @@ router.post('/:id/comments', validateToken, (req, res) => {
 });
 
 router.put('/comments/:id', validateToken, (req, res) => {
-    const updates = req.body;
+    const updates = req.cleanPayload;
     const {id} = req.params;
     Comment.updateComment(id, updates)
         .then(result => {
@@ -117,11 +118,7 @@ router.put('/:id', validateToken, validateOwnership, (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
-                "message": err.message,
-                "payload": updates,
-                "id": id,
-                "username": req.decodedJwt.username
-                })
+                "message": err.message
         })
 });
 
