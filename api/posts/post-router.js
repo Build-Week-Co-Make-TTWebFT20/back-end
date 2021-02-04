@@ -93,7 +93,7 @@ router.post('/:id/comments', validateToken, (req, res) => {
         })
 });
 
-router.put('/comments/:id', validateToken, validatePayload, (req, res) => {
+router.put('/comments/:id', validateToken, (req, res) => {
     const updates = req.cleanPayload;
     const {id} = req.params;
     Comment.updateComment(id, updates)
@@ -105,7 +105,7 @@ router.put('/comments/:id', validateToken, validatePayload, (req, res) => {
         })
 });
 
-router.put('/:id', validateToken, validateOwnership, (req, res) => {
+router.put('/:id', validateToken, validateOwnership, validatePayload, (req, res) => {
     const updates = req.body;
     const {id} = req.params;
     Post.update(id, updates)
