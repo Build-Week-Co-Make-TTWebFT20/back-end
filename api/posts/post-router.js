@@ -118,11 +118,7 @@ router.put('/:id', validateToken, validateOwnership, (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
-                "message": err.message,
-                "payload": updates,
-                "id": id,
-                "username": req.decodedJwt.username
-                })
+                "message": err.message
         })
 });
 
