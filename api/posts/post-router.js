@@ -106,7 +106,7 @@ router.put('/comments/:id', validateToken, (req, res) => {
 });
 
 router.put('/:id', validateToken, validateOwnership, validatePayload, (req, res) => {
-    const updates = req.body;
+    const updates = req.cleanPayload;
     const {id} = req.params;
     Post.update(id, updates)
         .then(result => {
