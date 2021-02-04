@@ -15,12 +15,14 @@ async function upVote(postId, username, direction){
     const votedPost = await db('users').where('username', username).first();
     const [vote] = await db('votes')
         .where({'post_id': postId, 'user_id': votedPost.id});
-    console.log(vote)
     if (typeof vote === "object"){
         console.log('update was called')
+        const updatesToApply = {"post_id": vote.id, "user_id": votedPost.id, "direction": direction}
+        console.log(updatesToApply)
         return update(vote.id, direction);
     } else {
-        let newEntry = { 'post_id': postId, 'user_id': votedPost.id, direction };
+        console.log('add new called')
+        let newEntry = { 'post_id': postId, 'user_id': votedPost.id, "direction": direction };
         return addUpvote(newEntry);
     }
 }
