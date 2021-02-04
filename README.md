@@ -32,6 +32,15 @@
 | PUT    | /api/posts/:id          | Allows a user to edit one of their posts, but only if they created it                    |
 | DELETE | /api/posts/:id          | Allows a user to delete one of their posts, but only if they created it                  |
 
+#### VOTING
+- Call this endpoint with a `direction` being either `-1` for downvote or `1` for upvote.
+- If the user does not have a vote in the database for a given post `id` then a new record will be made.
+- If the user does have a vote in the database for a given post `id` then that record will be updated instead.
+
+| Method | Endpoint                | Description                                                                              |
+| ------ | ------------------------| ---------------------------------------------------------------------------------------- |
+| POST   | /api/votes/:id          | Submit a `direction` payload to the post `id` to simulate up or downvoting               |
+
 #### Comments
 - Stretch goal. Each are currently implemented, unsure if they work or not
 - I've left these two endpoints combined as generally comments are associated with posts.
