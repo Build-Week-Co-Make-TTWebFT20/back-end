@@ -116,8 +116,12 @@ router.put('/:id', validateToken, validateOwnership, (req, res) => {
             }
         })
         .catch(err => {
-            console.log('this shouldnt happen')
-            res.status(500).json(err.message)
+            res.status(500).json({
+                "message": err.message,
+                "payload": updates,
+                "id": id,
+                "username": req.decodedJwt.username
+                })
         })
 });
 
