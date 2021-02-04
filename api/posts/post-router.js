@@ -93,7 +93,7 @@ router.post('/:id/comments', validateToken, (req, res) => {
         })
 });
 
-router.put('/comments/:id', validateToken, (req, res) => {
+router.put('/comments/:id', validateToken, validatePayload, (req, res) => {
     const updates = req.cleanPayload;
     const {id} = req.params;
     Comment.updateComment(id, updates)
@@ -117,9 +117,8 @@ router.put('/:id', validateToken, validateOwnership, (req, res) => {
             }
         })
         .catch(err => {
-            res.status(500).json({
-                "message": err.message
-        })
+            res.status(500).json({ "message": err.message })
+        });
 });
 
 router.delete('/:id', validateToken, validateOwnership, (req, res) => {
